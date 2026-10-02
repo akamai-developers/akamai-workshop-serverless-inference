@@ -1,0 +1,54 @@
+#cloud-config
+# Provisions a Linode to run the workshop agent.
+#
+# Do not paste this file as is. The deploy script substitutes the two placeholders
+# below. See deploy/README.md.
+
+package_update: true
+package_upgrade: false
+
+packages:
+  - docker.io
+  - git
+
+write_files:
+  - path: /etc/agent.env
+    permissions: "0600"
+    owner: root:root
+    content: |
+      AKAMAI_BASE_URL=__AKAMAI_BASE_URL__
+      AKAMAI_API_KEY=__AKAMAI_API_KEY__
+
+  - path: /etc/systemd/system/agent.service
+    permissions: "0644"
+    content: |
+      [Unit]
+      Description=Akamai Cloud Inference workshop agent
+      After=docker.service
+      Requires=docker.service
+
+      [Service]
+      Restart=always
+      RestartSec=5
+      ExecStartPre=-/usr/bin/docker rm -f agent
+      ExecStart=/usr/bin/docker run --rm --name agent \
+        --env-file /etc/agent.env \
+        -p 8000:8000 \
+        workshop-agent:latest
+      ExecStop=/usr/bin/docker stop agent
+
+      [Install]
+      WantedBy=multi-user.target
+
+runcmd:
+  # Only port 22 and 8000 are reachable.
+  - ufw default deny incoming
+  - ufw allow 22/tcp
+  - ufw allow 8000/tcp
+  - ufw --force enable
+
+  - systemctl enable --now docker
+  - git clone --depth 1 __REPO_URL__ /opt/workshop
+  - docker build -t workshop-agent:latest -f /opt/workshop/deploy/Dockerfile /opt/workshop
+  - systemctl daemon-reload
+  - systemctl enable --now agent
