@@ -7,7 +7,7 @@ things.
 
 | Notebook | Covers | Time |
 |---|---|---|
-| [1_tool_calling.ipynb](1_tool_calling.ipynb) | Describing a tool, the call and response exchange, the loop, `tool_choice`, parallel calls, failing tools | 20 min |
+| [1_tool_calling.ipynb](1_tool_calling.ipynb) | Describing a tool, the call and response exchange, the loop, reasoning inside the loop, `tool_choice`, parallel calls, failing tools | 25 min |
 | [2_build_the_agent.ipynb](2_build_the_agent.ipynb) | Document search as a tool, a trace you can debug, typed answers, the refusal path | 25 min |
 
 Run them in order.
@@ -48,6 +48,12 @@ capability limit. If you swap the model and your agent breaks, this is why.
 - `tool_choice: "none"` is unreliable here. It can leak the model's internal
   `<tool_call>` syntax into `content`. Omit `tools` instead.
 - Always cap the turns.
+- Treat `finish_reason: "length"` as an error inside a loop. A truncated turn has no
+  tool call, so a simple loop returns its empty content as the answer and nothing
+  raises. This bites hardest with reasoning on, because the thinking is written first
+  and can spend the whole budget before the tool call appears.
+- Reasoning works in the loop and costs roughly five times the output tokens, paid on
+  every turn. Worth it when choosing the tool is hard, wasted when it is obvious.
 - **Never set `response_format` on a request where the model might still need to call
   a tool.** The schema makes a tool call impossible, so the model either stalls or
   invents the answer. Notebook 2 demonstrates it inventing a number and citing a file
