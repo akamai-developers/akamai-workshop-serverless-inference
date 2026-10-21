@@ -113,14 +113,14 @@ off, which is the default.
 
 **The model ignores my tool and makes something up**
 
-Use `qwen3-8b`. `gemma-4-26b-a4b-it` is unreliable at tool calling: it fails several
+Use `qwen3-8-27b`. `gemma-4-26b-a4b-it` is unreliable at tool calling: it fails several
 `tool_choice` modes and can return an empty message after a tool result. If you need
 images and tools in one application, use both models for the parts they are good at.
 
 **The model calls the same tool over and over**
 
 Usually gemma. It can fail to read a value out of a tool result and will call the same
-tool again with the same arguments. Switch to `qwen3-8b`, and cap the number of turns
+tool again with the same arguments. Switch to `qwen3-8-27b`, and cap the number of turns
 in your loop so a stuck model fails fast.
 
 **A tool returned an error and the model did not recover**
@@ -143,7 +143,7 @@ Only `gemma-4-26b-a4b-it` accepts images.
 
 **`400` on the `dimensions` parameter**
 
-Not supported. This model returns 2,560 dimensions and cannot be truncated without
+Not supported. This model returns 4,096 dimensions and cannot be truncated without
 degrading the vectors.
 
 **Retrieval returns nothing useful**

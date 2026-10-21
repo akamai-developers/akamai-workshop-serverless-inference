@@ -25,16 +25,15 @@ The loop is about fifteen lines and you write it yourself. A framework would hid
 exactly the part worth understanding, and a loop you wrote is a loop you can debug.
 Everything here is plain `chat.completions.create`.
 
-## Why qwen3-8b and not the biggest model
+## Why qwen3-8-27b and not the biggest model
 
-Every exercise uses `qwen3-8b`. `gemma-4-26b-a4b-it` is larger and worse at this. In
-testing across five agent workloads, ten runs each:
+Every exercise uses `qwen3-8-27b`. `gemma-4-26b-a4b-it` is larger and worse at this. In
+testing across four agent workloads, ten runs each:
 
 | Model | tool_loop | handoff | websearch | long_session |
 |---|---|---|---|---|
 | gemma-4-26b-a4b-it | 0/10 | 0/10 | 0/10 | 10/10 |
-| qwen3-4b | 10/10 | 10/10 | 10/10 | 10/10 |
-| qwen3-8b | 10/10 | 10/10 | 10/10 | 10/10 |
+| qwen3-8-27b | 10/10 | 10/10 | 10/10 | 10/10 |
 
 Gemma calls a tool, gets a valid result, fails to read a value out of it, and calls
 the same tool again with the same arguments until it hits the turn cap. It passes the

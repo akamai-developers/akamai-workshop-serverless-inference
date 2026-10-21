@@ -47,7 +47,7 @@ curl -s localhost:8000/health
 
 curl -s localhost:8000/ask \
   -H 'Content-Type: application/json' \
-  -d '{"question": "What is the context limit of qwen3-8b?"}'
+  -d '{"question": "What is the context limit of qwen3-8-27b?"}'
 ```
 
 You should get back the answer, `answer_found: true`, and the source files.
@@ -102,7 +102,7 @@ curl -s "http://$IP:8000/ask" \
 
 ```json
 {
-  "answer": "Use qwen3-8b or qwen3-4b for tool calling. Avoid gemma-4-26b-a4b-it.",
+  "answer": "Use qwen3-8-27b for tool calling. Avoid gemma-4-26b-a4b-it.",
   "answer_found": true,
   "sources": ["tool-calling.md", "models.md"]
 }

@@ -6,7 +6,7 @@ without matching keywords.
 
 ## The embedding model
 
-`qwen3-embedding-4b` is the only embedding model on this endpoint. It returns 2,560
+`qwen3-embedding-8b` is the only embedding model on this endpoint. It returns 4,096
 dimensions per vector and accepts up to 8,192 tokens across all the inputs in one
 request.
 

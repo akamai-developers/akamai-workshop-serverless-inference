@@ -31,7 +31,7 @@ errors you are most likely to cause.
 - `/v1/models` returns ids and nothing else. No context windows, no capabilities.
 - A base URL missing its `/v1` suffix returns `404` on everything and looks like a
   bad model name.
-- Use `qwen3-8b` for anything involving tools.
+- Use `qwen3-8-27b` for anything involving tools.
 
 ## Next
 

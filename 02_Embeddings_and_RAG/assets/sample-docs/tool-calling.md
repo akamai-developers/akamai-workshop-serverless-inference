@@ -27,7 +27,7 @@ The `tool_choice` parameter controls whether the model may call a function.
 | `required` | The model must call some tool |
 | A named function | The model must call that specific function |
 
-All four work on qwen3-8b and qwen3-4b. On gemma-4-26b-a4b-it, `none`, `required`,
+All four work on qwen3-8-27b. On gemma-4-26b-a4b-it, `none`, `required`,
 and named selection are unreliable.
 
 ## Parallel calls

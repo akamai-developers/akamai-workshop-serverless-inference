@@ -112,7 +112,7 @@ def check_endpoint(base_url: str, api_key: str) -> None:
     for m in models:
         print(f"        {m}")
 
-    expected = "qwen3-8b"
+    expected = "qwen3-8-27b"
     if expected not in models:
         print(f"  note  {expected} is not in the list")
         print("        the notebooks default to it, pick another from the list above")

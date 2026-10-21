@@ -42,10 +42,9 @@ curl -s $AKAMAI_BASE_URL/models -H "Authorization: Bearer $AKAMAI_API_KEY"
 
 | Model | Use it for | Enforced context limit |
 |---|---|---|
-| `qwen3-8b` | Chat, tool calling, reasoning mode. The default for this workshop | 32,768 |
-| `qwen3-4b` | The same work, smaller and cheaper | 32,768 |
+| `qwen3-8-27b` | Chat, tool calling, reasoning mode. The default for this workshop | 32,768 |
 | `gemma-4-26b-a4b-it` | Image input, and long documents | 262,143 |
-| `qwen3-embedding-4b` | Embeddings. 2,560 dimensions | 8,192 |
+| `qwen3-embedding-8b` | Embeddings. 4,096 dimensions | 8,192 |
 
 `/v1/models` returns only `id`, `object`, `created`, and `owned_by`. It reports no
 context window and no capability information, so everything in the table above comes
@@ -55,7 +54,7 @@ To confirm a context limit yourself, send a prompt that is obviously too long an
 read the number out of the `400`. An earlier version of this endpoint did report
 `max_model_len` and has since stopped, so re-check rather than trusting this page.
 
-Use `qwen3-8b` for anything involving tools. `gemma-4-26b-a4b-it` is the only model
+Use `qwen3-8-27b` for anything involving tools. `gemma-4-26b-a4b-it` is the only model
 that accepts images, and it is unreliable at tool calling. See
 [model specific behavior](#model-specific-behavior).
 
@@ -63,7 +62,7 @@ that accepts images, and it is unreliable at tool calling. See
 
 ```python
 response = client.chat.completions.create(
-    model="qwen3-8b",
+    model="qwen3-8-27b",
     messages=[{"role": "user", "content": "Explain an API key in two sentences."}],
     max_tokens=150,
 )
@@ -84,7 +83,7 @@ answer matches the non-streamed one.
 
 ```python
 for chunk in client.chat.completions.create(
-    model="qwen3-8b",
+    model="qwen3-8-27b",
     messages=[{"role": "user", "content": "Count to five."}],
     max_tokens=40,
     stream=True,
@@ -97,14 +96,14 @@ for chunk in client.chat.completions.create(
 
 ```python
 response = client.embeddings.create(
-    model="qwen3-embedding-4b",
+    model="qwen3-embedding-8b",
     input=["A document paragraph", "A second paragraph"],
 )
 vectors = [item.embedding for item in response.data]
 print(len(vectors), len(vectors[0]))
 ```
 
-2,560 dimensions. Use the same model for documents and for queries, and re-embed
+4,096 dimensions. Use the same model for documents and for queries, and re-embed
 everything if you ever change models.
 
 The `dimensions` parameter is rejected with `400`, because this model has no
@@ -124,7 +123,7 @@ schema = {
     "additionalProperties": False,
 }
 response = client.chat.completions.create(
-    model="qwen3-8b",
+    model="qwen3-8-27b",
     messages=[{"role": "user", "content": "Extract: Ada works in Nairobi."}],
     response_format={"type": "json_schema", "json_schema": {"name": "person", "schema": schema}},
     max_tokens=200,
@@ -188,11 +187,11 @@ Sending an image to a text only model returns a clear error.
 
 ## Reasoning mode
 
-`qwen3-8b` has a thinking mode, off unless you ask for it:
+`qwen3-8-27b` has a thinking mode, off unless you ask for it:
 
 ```python
 response = client.chat.completions.create(
-    model="qwen3-8b",
+    model="qwen3-8-27b",
     messages=[{"role": "user", "content": "If 3 machines take 3 minutes, how long for 100?"}],
     max_tokens=600,
     extra_body={"chat_template_kwargs": {"enable_thinking": True}},
@@ -207,14 +206,14 @@ spends output tokens and adds latency. Leave it off for short factual work and r
 
 ## Model specific behavior
 
-| Behavior | qwen3-8b | qwen3-4b | gemma-4-26b-a4b-it |
-|---|---|---|---|
-| Tool calling, all `tool_choice` modes | works | works | unreliable |
-| Sending a tool result back | works | works | can return an empty message |
-| Image input | not supported | not supported | works, base64 only |
-| Reasoning mode | works | no | no |
+| Behavior | qwen3-8-27b | gemma-4-26b-a4b-it |
+|---|---|---|
+| Tool calling, all `tool_choice` modes | works | unreliable |
+| Sending a tool result back | works | can return an empty message |
+| Image input | not supported | works, base64 only |
+| Reasoning mode | works | no |
 
-Use `qwen3-8b` for tools and `gemma-4-26b-a4b-it` only for images.
+Use `qwen3-8-27b` for tools and `gemma-4-26b-a4b-it` only for images.
 
 ## Errors
 
@@ -249,7 +248,7 @@ import requests
 r = requests.post(
     f"{base_url}/chat/completions",
     headers={"Authorization": f"Bearer {api_key}"},
-    json={"model": "qwen3-8b", "messages": [{"role": "user", "content": "hi"}], "max_tokens": 5},
+    json={"model": "qwen3-8-27b", "messages": [{"role": "user", "content": "hi"}], "max_tokens": 5},
 )
 print({k: v for k, v in r.headers.items() if k.lower().startswith("x-ratelimit")})
 ```

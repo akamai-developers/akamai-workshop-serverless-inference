@@ -6,10 +6,9 @@ The context window is the total of input and output tokens for a single request.
 
 | Model | Context window |
 |---|---|
-| qwen3-8b | 32,768 |
-| qwen3-4b | 32,768 |
+| qwen3-8-27b | 32,768 |
 | gemma-4-26b-a4b-it | 262,143 |
-| qwen3-embedding-4b | 8,192 |
+| qwen3-embedding-8b | 8,192 |
 
 A prompt that is too long returns HTTP 400 with a message naming both numbers, for
 example "Estimated input token count (318947) exceeds the model limit (262143)."

@@ -13,7 +13,7 @@ from typing import Any
 
 import numpy as np
 
-EMBED_MODEL = "qwen3-embedding-4b"
+EMBED_MODEL = "qwen3-embedding-8b"
 
 # One embeddings request carries an 8,192 token budget across all of its inputs,
 # so send the chunks in small batches rather than all at once.

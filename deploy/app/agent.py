@@ -18,7 +18,7 @@ from pydantic import BaseModel, Field
 
 from workshop_utils.retrieval import build_index, search as search_index
 
-MODEL = "qwen3-8b"
+MODEL = "qwen3-8-27b"
 CORPUS = Path(__file__).parent / "corpus"
 MAX_TURNS = 5
 

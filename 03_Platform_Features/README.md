@@ -22,7 +22,7 @@ thing it borrows from here.
 Images go in as base64 data URLs. You will also watch a remote URL fail with `422`,
 because the endpoint does not fetch images from the internet.
 
-**Reasoning mode** on `qwen3-8b`, where the model works through a problem before
+**Reasoning mode** on `qwen3-8-27b`, where the model works through a problem before
 answering. The notebook uses a question with a trap in it, so you can see the direct
 answer get it wrong and the reasoning answer get it right.
 

@@ -30,7 +30,7 @@ arrive. Then:
 
 - Run every notebook yourself the morning of, against the live endpoint. Model
   availability changes.
-- Confirm `curl $AKAMAI_BASE_URL/models` still lists the four models the materials
+- Confirm `curl $AKAMAI_BASE_URL/models` still lists the models the materials
   name. If a model was replaced, the model table in
   [the endpoint reference](inference.md#models) is the one place to correct.
 - Have a key ready to lend. Someone will arrive without one.
@@ -59,9 +59,9 @@ stalls and burns the output budget. Notebook 2 shows the failure before the fix.
 
 | Module | Model | Reason |
 |---|---|---|
-| 01, 02, 04 | `qwen3-8b` | Passes every tool calling mode. Fast |
+| 01, 02, 04 | `qwen3-8-27b` | Passes every tool calling mode. Fast |
 | 03, image input only | `gemma-4-26b-a4b-it` | The only model that accepts images |
-| 02 | `qwen3-embedding-4b` | The only embedding model |
+| 02 | `qwen3-embedding-8b` | The only embedding model |
 
 Do not use `gemma-4-26b-a4b-it` for tool calling. It fails several `tool_choice`
 modes and can return an empty message after a tool result. In testing it called the
