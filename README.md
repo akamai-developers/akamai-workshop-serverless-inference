@@ -1,7 +1,9 @@
 # Getting started with Akamai Cloud Inference
 
-> ### $300 in free credit for Akamai Cloud
-> Sign up here: **[http://login.linode.com/signup?promo=akm-dev-git-300-72326-P153](http://login.linode.com/signup?promo=akm-dev-git-300-72326-P153)**
+## New to Akamai Cloud?
+
+> ### Get started with $300 credit.
+> Create a new account here: **[http://login.linode.com/signup?promo=akm-dev-git-300-72326-P153](http://login.linode.com/signup?promo=akm-dev-git-300-72326-P153)**
 
 Call a model, build retrieval over your own documents, and put both into an agent.
 Four modules of runnable notebooks, about two hours end to end, or 35 minutes for the
